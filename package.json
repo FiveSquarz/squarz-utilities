@@ -1,0 +1,8 @@
+{
+ "name": "com.fivesquarz.my-utilities",
+ "version": "1.0.0",
+ "displayName": "My Utilities",
+ "description": "My utilities",
+ "unity": "2020.1",
+ "keywords": ["library", "utility"]
+}
