@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
-using SquarzUtilities.MathUtilities;
+﻿using System;
 
-namespace SquarzUtilities.PerlinNoise {
+namespace SquarzUtilities.Maths {
     public static class PerlinNoise {
+
         static readonly int[] p = {
             151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,
             103,30,69,142,8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,
@@ -41,6 +39,7 @@ namespace SquarzUtilities.PerlinNoise {
 
         static double Fade(double x) {
             return 6d * Math.Pow(x, 5d) - 15d * Math.Pow(x, 4d) + 10d * Math.Pow(x, 3d);
+  
         }
 
         static double Lerp(double a, double b, double t) {
@@ -54,9 +53,9 @@ namespace SquarzUtilities.PerlinNoise {
 
         public static double Noise1D(double x) {
             int xi = MathUtils.Mod((int)Math.Floor(x), 256);
-            double xf = MathUtils.Mod((float)x, 1f);
+            double xf = MathUtils.Mod(x, 1d);
 
-            return Lerp(Grad1D(p[xi], xf), Grad1D(p[xi + 1], xf - 1), Fade(xf));
+            return Lerp(Grad1D(p[xi], xf), Grad1D(p[xi + 1], xf - 1d), Fade(xf));
         }
 
         static double Grad2D(int hash, double x, double y) {
@@ -76,8 +75,8 @@ namespace SquarzUtilities.PerlinNoise {
             int xi = MathUtils.Mod((int)Math.Floor(x), 256);
             int yi = MathUtils.Mod((int)Math.Floor(y), 256);
 
-            double xf = MathUtils.Mod((float)x, 1f);
-            double yf = MathUtils.Mod((float)y, 1f);
+            double xf = MathUtils.Mod(x, 1d);
+            double yf = MathUtils.Mod(y, 1d);
 
             double v = Fade(xf);
 
@@ -86,8 +85,8 @@ namespace SquarzUtilities.PerlinNoise {
             int ba = p[p[xi + 1] + yi    ];
             int bb = p[p[xi + 1] + yi + 1];
 
-            double x1 = Lerp(Grad2D(aa, xf, yf    ), Grad2D(ba, xf - 1, yf    ), v);
-            double x2 = Lerp(Grad2D(ab, xf, yf - 1), Grad2D(bb, xf - 1, yf - 1), v);
+            double x1 = Lerp(Grad2D(aa, xf, yf     ), Grad2D(ba, xf - 1d, yf     ), v);
+            double x2 = Lerp(Grad2D(ab, xf, yf - 1d), Grad2D(bb, xf - 1d, yf - 1d), v);
 
             return Lerp(x1, x2, Fade(yf));
         }
@@ -126,9 +125,9 @@ namespace SquarzUtilities.PerlinNoise {
             int yi = MathUtils.Mod((int)Math.Floor(y), 256);
             int zi = MathUtils.Mod((int)Math.Floor(z), 256);
 
-            double xf = MathUtils.Mod((float)x, 1f);
-            double yf = MathUtils.Mod((float)y, 1f);
-            double zf = MathUtils.Mod((float)z, 1f);
+            double xf = MathUtils.Mod(x, 1d);
+            double yf = MathUtils.Mod(y, 1d);
+            double zf = MathUtils.Mod(z, 1d);
 
             double u = Fade(xf);
             double v = Fade(yf);
@@ -142,10 +141,10 @@ namespace SquarzUtilities.PerlinNoise {
             int bab = p[p[p[xi + 1] + yi    ] + zi + 1];
             int bbb = p[p[p[xi + 1] + yi + 1] + zi + 1];
 
-            double x1 = Lerp(Grad3D(aaa, xf, yf    , zf    ), Grad3D(baa, xf - 1, yf    , zf    ), u);
-            double x2 = Lerp(Grad3D(aba, xf, yf - 1, zf    ), Grad3D(bba, xf - 1, yf - 1, zf    ), u);
-            double x3 = Lerp(Grad3D(aab, xf, yf    , zf - 1), Grad3D(bab, xf - 1, yf    , zf - 1), u);
-            double x4 = Lerp(Grad3D(abb, xf, yf - 1, zf - 1), Grad3D(bbb, xf - 1, yf - 1, zf - 1), u);
+            double x1 = Lerp(Grad3D(aaa, xf, yf     , zf     ), Grad3D(baa, xf - 1d, yf     , zf     ), u);
+            double x2 = Lerp(Grad3D(aba, xf, yf - 1d, zf     ), Grad3D(bba, xf - 1d, yf - 1d, zf     ), u);
+            double x3 = Lerp(Grad3D(aab, xf, yf     , zf - 1d), Grad3D(bab, xf - 1d, yf     , zf - 1d), u);
+            double x4 = Lerp(Grad3D(abb, xf, yf - 1d, zf - 1d), Grad3D(bbb, xf - 1d, yf - 1d, zf - 1d), u);
 
             double y1 = Lerp(x1, x2, v);
             double y2 = Lerp(x3, x4, v);
@@ -228,10 +227,10 @@ namespace SquarzUtilities.PerlinNoise {
             int zi = MathUtils.Mod((int)Math.Floor(z), 256);
             int wi = MathUtils.Mod((int)Math.Floor(w), 256);
 
-            double xf = MathUtils.Mod((float)x, 1f);
-            double yf = MathUtils.Mod((float)y, 1f);
-            double zf = MathUtils.Mod((float)z, 1f);
-            double wf = MathUtils.Mod((float)w, 1f);
+            double xf = MathUtils.Mod(x, 1d);
+            double yf = MathUtils.Mod(y, 1d);
+            double zf = MathUtils.Mod(z, 1d);
+            double wf = MathUtils.Mod(w, 1d);
 
             double s = Fade(xf);
             double t = Fade(yf);
@@ -254,14 +253,14 @@ namespace SquarzUtilities.PerlinNoise {
             int babb = p[p[p[p[xi + 1] + yi    ] + zi + 1] + wi + 1];
             int bbbb = p[p[p[p[xi + 1] + yi + 1] + zi + 1] + wi + 1];
 
-            double x1 = Lerp(Grad4D(aaaa, xf, yf    , zf    , wf    ), Grad4D(baaa, xf - 1, yf    , zf    , wf    ), s);
-            double x2 = Lerp(Grad4D(abaa, xf, yf - 1, zf    , wf    ), Grad4D(bbaa, xf - 1, yf - 1, zf    , wf    ), s);
-            double x3 = Lerp(Grad4D(aaba, xf, yf    , zf - 1, wf    ), Grad4D(baba, xf - 1, yf    , zf - 1, wf    ), s);
-            double x4 = Lerp(Grad4D(abba, xf, yf - 1, zf - 1, wf    ), Grad4D(bbba, xf - 1, yf - 1, zf - 1, wf    ), s);
-            double x5 = Lerp(Grad4D(aaab, xf, yf    , zf    , wf - 1), Grad4D(baab, xf - 1, yf    , zf    , wf - 1), s);
-            double x6 = Lerp(Grad4D(abab, xf, yf - 1, zf    , wf - 1), Grad4D(bbab, xf - 1, yf - 1, zf    , wf - 1), s);
-            double x7 = Lerp(Grad4D(aabb, xf, yf    , zf - 1, wf - 1), Grad4D(babb, xf - 1, yf    , zf - 1, wf - 1), s);
-            double x8 = Lerp(Grad4D(abbb, xf, yf - 1, zf - 1, wf - 1), Grad4D(bbbb, xf - 1, yf - 1, zf - 1, wf - 1), s);
+            double x1 = Lerp(Grad4D(aaaa, xf, yf     , zf     , wf     ), Grad4D(baaa, xf - 1d, yf     , zf     , wf     ), s);
+            double x2 = Lerp(Grad4D(abaa, xf, yf - 1d, zf     , wf     ), Grad4D(bbaa, xf - 1d, yf - 1d, zf     , wf     ), s);
+            double x3 = Lerp(Grad4D(aaba, xf, yf     , zf - 1d, wf     ), Grad4D(baba, xf - 1d, yf     , zf - 1d, wf     ), s);
+            double x4 = Lerp(Grad4D(abba, xf, yf - 1d, zf - 1d, wf     ), Grad4D(bbba, xf - 1d, yf - 1d, zf - 1d, wf     ), s);
+            double x5 = Lerp(Grad4D(aaab, xf, yf     , zf     , wf - 1d), Grad4D(baab, xf - 1d, yf     , zf     , wf - 1d), s);
+            double x6 = Lerp(Grad4D(abab, xf, yf - 1d, zf     , wf - 1d), Grad4D(bbab, xf - 1d, yf - 1d, zf     , wf - 1d), s);
+            double x7 = Lerp(Grad4D(aabb, xf, yf     , zf - 1d, wf - 1d), Grad4D(babb, xf - 1d, yf     , zf - 1d, wf - 1d), s);
+            double x8 = Lerp(Grad4D(abbb, xf, yf - 1d, zf - 1d, wf - 1d), Grad4D(bbbb, xf - 1d, yf - 1d, zf - 1d, wf - 1d), s);
 
             double y1 = Lerp(x1, x2, t);
             double y2 = Lerp(x3, x4, t);
